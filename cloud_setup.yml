@@ -6,16 +6,16 @@
   #become_method: sudo
 
   tasks:
-- name: upgrade all packages
-  yum:
-    name: '*'
-      state: present
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest
 
-- name: Download ssh_config from git repo
-  get_url:
-    url: https://raw.githubusercontent.com/habbis/sudoers_centos/master/sudoers
-    dest: /etc/
-    mode: '0440'
+  - name: Download ssh_config from git repo
+    get_url:
+      url: https://raw.githubusercontent.com/habbis/sudoers_centos/master/sudoers
+      dest: /etc/
+      mode: '0440'
 
   - name: Create group for docker
     group:

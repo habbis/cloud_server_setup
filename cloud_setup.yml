@@ -6,14 +6,14 @@
   #become_method: sudo
 
   tasks:
-  - name: upgrade all packages
-    yum:
-      name: '*'
-      state: present
+#- name: upgrade all packages
+    #yum:
+      #name: '*'
+      #state: present
   - name: Create group for docker
     group:
       name: docker
-      state: present
+      state: absent
 
   - name: add user called user with sudo right
     user:
@@ -26,13 +26,13 @@
     authorized_key:
       user: user
       state: present
-      keys: https://github.com/habbis.keys
+      key: https://github.com/habbis.keys
 
-  - name: set authorized keys from github to virt
-    authorized_key:
-      user: virt
-      state: present
-      keys: https://github.com/habbis.keys
+   #- name: set authorized keys from github to virt
+     #authorized_key:
+       #user: virt
+       #state: present
+       #keys: https://github.com/habbis.keys
 
   - name: Install packages centos7 and RHEL7
     yum:
@@ -40,7 +40,7 @@
         - cockpit
         - curl
         - wget
-        - python
+        - python2
         - python3
         - python3-pip
         - git

@@ -7,7 +7,7 @@
 
   tasks:
   - name: upgrade all packages
-    yum:
+    apt:
       name: '*'
       state: latest
 
@@ -26,7 +26,7 @@
     user:
       name: user
       shell: /bin/bash
-      groups: wheel
+      groups: sudo
       append: yes
 
   - name: set authorized keys from github to user
@@ -41,8 +41,8 @@
        #state: present
        #keys: https://github.com/habbis.keys
 
-  - name: Install packages centos7 and RHEL7
-    yum:
+  - name: Install packages ubuntu
+    apt:
       name:
         - cockpit
         - curl
@@ -52,10 +52,9 @@
         - python3-pip
         - git
         - vim
-        - yum-utils
+        - apt-utils
         - device-mapper-persistent-data
         - lvm2
-        - epel-release
       state: present
 
   - name: enable cockpit systemd service

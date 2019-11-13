@@ -11,11 +11,34 @@
       name: '*'
       state: latest
 
-  - name: Download ssh_config from git repo
+  - name: Install packages ubuntu
+    apt:
+      name:
+        - cockpit
+        - curl
+        - wget
+        - python2
+        - python3
+        - python3-pip
+        - git
+        - vim
+        - apt-utils
+        - device-mapper-persistent-data
+        - lvm2
+        - fail2ban
+      state: present
+
+  - name: sudoers files
     get_url:
       url: https://raw.githubusercontent.com/habbis/sudoers_centos/master/sudoers
       dest: /etc/
       mode: '0440'
+
+  - name: Download sshd_config from git repo
+    get_url:
+      url: https://gitlab.com/habbis/openssh_config/raw/master/sshd_config
+      dest: /etc/ssh/
+      mode: '0744'
 
   - name: Create group for docker
     group:
@@ -35,30 +58,35 @@
       state: present
       key: https://github.com/habbis.keys
 
+  - name: Create config file for fail2ban
+    template:
+      src: templates/jail.local
+      dest: /etc/fail2ban/jail.local
+      owner: root
+      group: root
+      mode: 0644
+
+  - name:  enable_fail2ban
+    systemd:
+      name: fail2ban
+      state: started
+      enabled: yes
+
+  - name: reload sshd
+    service:
+      name: sshd
+      state: reloaded
+
+
    #- name: set authorized keys from github to virt
      #authorized_key:
        #user: virt
        #state: present
        #keys: https://github.com/habbis.keys
 
-  - name: Install packages ubuntu
-    apt:
-      name:
-        - cockpit
-        - curl
-        - wget
-        - python2
-        - python3
-        - python3-pip
-        - git
-        - vim
-        - apt-utils
-        - device-mapper-persistent-data
-        - lvm2
-      state: present
 
-  - name: enable cockpit systemd service
-    firewalld:
-      service: cockpit
-      permanent: yes
-      state: enabled
+      #- name: enable cockpit systemd service
+      #firewalld:
+      #service: cockpit
+      #permanent: yes
+      #state: enabled

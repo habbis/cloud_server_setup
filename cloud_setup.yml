@@ -25,6 +25,7 @@
         - apt-utils
         - device-mapper-persistent-data
         - lvm2
+        - lynis
         - fail2ban
       state: present
 

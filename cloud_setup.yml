@@ -29,11 +29,16 @@
         - fail2ban
       state: present
 
-  - name: sudoers files
-    get_url:
-      url: https://raw.githubusercontent.com/habbis/sudoers_centos/master/sudoers
-      dest: /etc/
-      mode: '0440'
+ - name: add group admins for nopasswd sudo
+   group:
+     name: admins
+     stat: present
+
+ - name: sudoers file
+   get_url:
+     url: https://raw.githubusercontent.com/habbis/sudoers/master/admins
+     dest: /etc/sudoers.d
+     mode: '0440'
 
   - name: Download sshd_config from git repo
     get_url:
@@ -50,7 +55,7 @@
     user:
       name: user
       shell: /bin/bash
-      groups: sudo
+      groups: admins
       append: yes
 
   - name: set authorized keys from github to user

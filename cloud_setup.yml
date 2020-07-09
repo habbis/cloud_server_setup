@@ -23,13 +23,13 @@
        # - cockpit
         - curl
         - wget
-        - python2
+        - python
         - python3
         - python3-pip
         - git
         - vim
         - apt-utils
-        - device-mapper-persistent-data
+        #- device-mapper-persistent-data
         - lvm2
         - lynis
         - fail2ban
@@ -43,13 +43,13 @@
         #- podman
         - curl
         - wget
-        - python2
+        - python
         - python3
         - python3-pip
         - git
         - vim
         - yum-utils
-        - device-mapper-persistent-data
+        #- device-mapper-persistent-data
         - lvm2
         - epel-release
         - sudo
@@ -63,7 +63,7 @@
   - name: add group admins for nopasswd sudo
     group:
       name: admins
-      stat: present
+      state: present
 
   - name: sudoers file
     get_url:

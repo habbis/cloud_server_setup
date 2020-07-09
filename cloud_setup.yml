@@ -34,6 +34,7 @@
         - lynis
         - fail2ban
       state: present
+    ignore_errors: yes
 
   - name: Install packages centos7 and RHEL7
     package:
@@ -59,16 +60,16 @@
       state: present
     ignore_errors: yes
 
- - name: add group admins for nopasswd sudo
-   group:
-     name: admins
-     stat: present
+  - name: add group admins for nopasswd sudo
+    group:
+      name: admins
+      stat: present
 
- - name: sudoers file
-   get_url:
-     url: https://raw.githubusercontent.com/habbis/sudoers/master/admins
-     dest: /etc/sudoers.d
-     mode: '0440'
+  - name: sudoers file
+    get_url:
+      url: https://raw.githubusercontent.com/habbis/sudoers/master/admins
+      dest: /etc/sudoers.d
+      mode: '0440'
 
   - name: Download sshd_config from git repo
     get_url:

@@ -54,9 +54,17 @@
         - epel-release
         - sudo
         - bash-completion
-        - fail2ban
+        #- fail2ban
         #- centos-release-scl-rh
         #- centos-release-scl
+      state: present
+    ignore_errors: yes
+
+
+  - name: Install packages centos7 and RHEL7
+    package:
+      name:
+        - fail2ban
       state: present
     ignore_errors: yes
 
